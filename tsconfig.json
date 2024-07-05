@@ -1,0 +1,42 @@
+{
+    "compilerOptions": {
+        "outDir": "dist/js", // onde serão gravados os arquivos resultantes.
+        "target": "ES6", // definindo a versão do js que será gerado.
+        "noEmitOnError": true, // não gera JS enquanto o TS estiver com problemas
+
+        "moduleResolution": "node", 
+
+        "noImplicitAny": true, // não deixa o TS inferir o any implicitamente! 
+                                // Por padrão, no TS o tipo any é assumido quando não é definido o tipo da variável
+    
+        "removeComments": true, // removendo comentários no arquivo compilado JS
+
+        "strictNullChecks": true // Quando true, força o dev a tratar os valores que podem ser null.
+                                // Com o strictnullcheck como false, os null só seriam percebidos 
+                                // no runtime (rodando no navegador)
+            
+            // exemplo 1) --> form no app.ts:
+            //      O querySelector com strictnullchecks true pode assumir Element | null...com isso,
+            //      o form poderá tbm ser Element | null. Logo, é necessário tratar o possível valor null do form.
+            //      Foi tratado com um if (form) {....}. 
+
+            // exemplo 2) --> querySelector no compra-controller.ts
+            //      O querySelector em compra-controller pode assumir HTMLInputElement | null....com isso,
+            //      os inputs tbm poderão ter HTMLInputElement | null. Logo, é necessário tratar o possível valor null.
+            // *** O null é retornado caso um id do HTML seja passado errado (não exista)!
+            // *** Não é possível colocar um HTMLInputElement | null dentro de um HTMLInputElement. 
+            //      O tratamento do possível null neste caso foi diferente: 
+            //       - na verdade, foi assumindo as variáveis como ---> as HTMLInputElement
+
+            // exemplo 3) --> querySelector em view.ts
+            //      Para tratar, foi criada uma variável elm para receber o querySelector, e essa variável
+            //      foi testada para verificar a existência. Caso exista, faz a atribuição para this.elemento como
+            //      sendo um HTMLElement.
+            // Com isso, ao passarmos um #comprasViewwwwwww por exemplo, teremos um erro.
+    
+    },
+    "include": [
+        "app/**/*" // onde estão os arquivos ts // ** -> toda subpasta // * -> todo arquivo
+    ]
+
+}
